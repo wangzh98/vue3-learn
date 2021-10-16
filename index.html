@@ -23,13 +23,14 @@
     <body>
         <div id="app" v-cloak>
             {{ greeting }}
-            <input v-model = "greeting"/>
+            <input @keyup.enter="greet(greeting + '!!!')" v-model = "greeting"/>
 
             <hr />
-            <div v-show="isVisible" class="box"></div>
-            <div v-else-if="isVisible" class="box"></div>
-            <div v-else class="box"></div>
 
+            <!-- <button v-on:click="isVisible = !isVisible">Toggle Box</button> -->
+            <button @click="toggleBox">Toggle Box</button>
+
+            <div v-if="isVisible" class="box"></div>
         </div>
 
         <script src="https://unpkg.com/vue@next"></script>
@@ -38,7 +39,16 @@
                 data: function() {
                     return {
                         greeting: 'Hello vue 3!',
-                        isVisible: true
+                        isVisible: false
+                    }
+                },
+                methods: {
+                    // 不能用arrow function
+                    toggleBox: function () {
+                        this.isVisible = !this.isVisible;
+                    },
+                    greet(greeting) {
+                        console.log(greeting);
                     }
                 }
             })
